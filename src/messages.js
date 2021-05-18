@@ -205,7 +205,7 @@ Une fois cette liste configurée, il suffit d'utiliser cette commande :
     }
     return {
       response_type: "in_channel",
-      text: `${mainText} aléatoirement pour faire une relecture, suite à une demande de <@${askingUser}> !`,
+      text: `${mainText} aléatoirement pour faire une relecture, suite à une demande de <@${askingUser}> ! <@${askingUser}> 2r1 frr `,
       attachments: attachments
     };
   }
