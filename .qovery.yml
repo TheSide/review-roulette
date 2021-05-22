@@ -1,0 +1,11 @@
+---
+application:
+  name: "review-roulette"
+  project: "rou-app"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-review-roulette"
+  routes:
+  - application_name: "review-roulette"
+    paths:
+    - "/*"
