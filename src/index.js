@@ -17,7 +17,7 @@ server.use(
 /**
  * Returns the installation link
  */
-router.get(`${config.baseUrl}/install-link`, (req, res) => {
+server.get(`${config.baseUrl}/install-link`, (req, res) => {
   res.send(
     `https://slack.com/oauth/authorize?scope=commands&client_id=${
       config.client_id
@@ -30,17 +30,17 @@ router.get(`${config.baseUrl}/install-link`, (req, res) => {
 /**
  * Users are redirected here during installation on a workspace
  */
-router.get(`${config.baseUrl}/install`, app.install);
+server.get(`${config.baseUrl}/install`, app.install);
 
 /**
  * When a user types a /roulette command
  */
-router.post(`${config.baseUrl}/command`, app.processCommand);
+server.post(`${config.baseUrl}/command`, app.processCommand);
 
 /**
  * When a user sends an action
  */
-router.post(`${config.baseUrl}/action`, app.processAction);
+server.post(`${config.baseUrl}/action`, app.processAction);
 
 console.log("le port : " + process.env.PORT)
 
