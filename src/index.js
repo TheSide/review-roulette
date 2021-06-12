@@ -6,6 +6,7 @@ const config = require("../config.js");
 const serverless = require('serverless-http');
 
 const server = express();
+const router = express.Router();
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(
@@ -16,7 +17,7 @@ server.use(
 /**
  * Returns the installation link
  */
-server.get(`${config.baseUrl}/install-link`, (req, res) => {
+router.get(`${config.baseUrl}/install-link`, (req, res) => {
   res.send(
     `https://slack.com/oauth/authorize?scope=commands&client_id=${
       config.client_id
@@ -29,19 +30,21 @@ server.get(`${config.baseUrl}/install-link`, (req, res) => {
 /**
  * Users are redirected here during installation on a workspace
  */
-server.get(`${config.baseUrl}/install`, app.install);
+router.get(`${config.baseUrl}/install`, app.install);
 
 /**
  * When a user types a /roulette command
  */
-server.post(`${config.baseUrl}/command`, app.processCommand);
+router.post(`${config.baseUrl}/command`, app.processCommand);
 
 /**
  * When a user sends an action
  */
-server.post(`${config.baseUrl}/action`, app.processAction);
+router.post(`${config.baseUrl}/action`, app.processAction);
 
 console.log("le port : " + process.env.PORT)
+
+server.use('/.netlify/functions/server', router);  // path must route to lambda
 
 module.exports.handler = serverless(server);
 /*
