@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const app = require("./app.js");
 const config = require("../config.js");
+const serverless = require('serverless-http');
 
 const server = express();
 
@@ -41,6 +42,10 @@ server.post(`${config.baseUrl}/command`, app.processCommand);
 server.post(`${config.baseUrl}/action`, app.processAction);
 
 console.log("le port : " + process.env.PORT)
+
+module.exports.handler = serverless(server);
+/*
 server.listen(process.env.PORT || config.port, () =>
   console.log(`Review Roulette server is listening on port ${config.port}!`)
 );
+*/
