@@ -46,6 +46,7 @@ console.log("le port : " + process.env.PORT)
 
 server.use('/.netlify/functions/server', router);  // path must route to lambda
 
+module.exports = server;
 module.exports.handler = serverless(server);
 /*
 server.listen(process.env.PORT || config.port, () =>
