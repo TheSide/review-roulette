@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "build": "netlify-lambda build src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "alex",
@@ -12,7 +13,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
+    "netlify-lambda": "^1.6.3",
     "lodash": "^4.17.11",
     "serverless-http": "^1.6.0"
   }
