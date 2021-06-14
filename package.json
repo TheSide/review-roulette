@@ -2,7 +2,7 @@
   "name": "review-roulette",
   "version": "1.0.0",
   "description": "Randomly selects a reviewer for your MR",
-  "main": "index.js",
+  "main": "functions/server.js",
   "scripts": {
     "start": "node src/index.js",
     "build": "netlify-lambda build src",
