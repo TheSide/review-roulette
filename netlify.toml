@@ -6,7 +6,3 @@
   # functions build directory
   functions = "functions-build"
   
-[[redirects]]
-  to = "/*"
-  from = "/.netlify/functions/index/:splat"
-  status = 200
