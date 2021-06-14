@@ -4,7 +4,8 @@ const axios = require("axios");
 const _difference = require("lodash/difference");
 const config = require("../config.js");
 
-const dataFilePath = path.join(__dirname, "..", "data.json");
+const fileName = "./data.json";
+const dataFilePath = (process.env.LAMBDA_TASK_ROOT)? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName):path.resolve(__dirname, fileName)
 
 /**
  * Returns an array of user entities found in a string
