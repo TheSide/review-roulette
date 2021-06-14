@@ -5,8 +5,3 @@
   publish = "src/public"
   # functions build directory
   functions = "functions-build"
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/index/:splat"
-  status = 200
-  force = true
