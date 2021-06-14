@@ -17,7 +17,7 @@
   function getInstallLink() {
     return new Promise((resolve, reject) => {
       var request = new XMLHttpRequest();
-      request.open("GET", "./install-link", true);
+      request.open("GET", "./.netlify/functions/index/install-link", true);
 
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
