@@ -5,8 +5,3 @@
   publish = "src/public"
   # functions build directory
   functions = "functions-build"
-
-[[redirects]]
-  from = "/install-link"
-  to = "/.netlify/functions/index/install-link"
-  status = 200
