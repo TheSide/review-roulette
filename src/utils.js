@@ -5,7 +5,8 @@ const _difference = require("lodash/difference");
 const config = require("../config.js");
 
 const fileName = "./data.json";
-const dataFilePath = (process.env.LAMBDA_TASK_ROOT)? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName):path.resolve(__dirname, fileName)
+//const dataFilePath = (process.env.LAMBDA_TASK_ROOT)? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName):path.resolve(__dirname, fileName)
+const dataFilePath = fileName;
 
 /**
  * Returns an array of user entities found in a string
