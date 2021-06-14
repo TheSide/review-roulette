@@ -5,3 +5,8 @@
   publish = "src/public"
   # functions build directory
   functions = "functions-build"
+  
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
