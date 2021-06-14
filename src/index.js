@@ -44,7 +44,7 @@ router.post(`${config.baseUrl}/action`, app.processAction);
 
 console.log("le port : " + process.env.PORT)
 
-server.use('/.netlify/functions/index', router);  // path must route to lambda
+server.use('/', router);  // path must route to lambda
 
 module.exports = server;
 module.exports.handler = serverless(server);
