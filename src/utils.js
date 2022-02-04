@@ -4,15 +4,25 @@ const axios = require("axios");
 const _difference = require("lodash/difference");
 const config = require("../config.js");
 
-const fileName = "/tmp/data.json";
-//const dataFilePath = (process.env.LAMBDA_TASK_ROOT)? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName):path.resolve(__dirname, fileName)
-const dataFilePath = fileName;
+const firebaseAdmin = require("firebase-admin");
+const { v4: uuidv4 } = require("uuid");
+
+const serviceAccount = require("./slack-c2ee7-firebase-adminsdk-g5dzi-23f41112f8.json");
+
+const admin = firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+});
+
+const storageRef = admin.storage().bucket(`gs://slack-c2ee7.appspot.com`);
+
+const fileName = "data.json";
+const dataFilePath = path.join(__dirname, "..", fileName);
 
 /**
  * Returns an array of user entities found in a string
  * @param {string} str
  */
-const extractUserEntities = str => {
+const extractUserEntities = (str) => {
   const regex = /<@([^>\|]+)[^>]*>/g;
   let match,
     results = [];
@@ -29,16 +39,43 @@ const extractUserEntities = str => {
  * Returns an group found in a command
  * @param {string} str
  */
-const extractGroup = str => {
-  return str.replace(/<@.*>/g, '').trim().split(" ")[1];
+const extractGroup = (str) => {
+  return str.replace(/<@.*>/g, "").trim().split(" ")[1];
 };
 
 /**
  * Loads the data file and returns its contents
  */
+// const loadData = async () => {
+//   let destFilename = './data.json';
+//   const options = {
+//     // The path to which the file should be downloaded, e.g. "./file.txt"
+//     destination: destFilename,
+//   };
+
+//   // Downloads the file
+//   await storage.bucket(bucketName).file(filename).download(options);
+
+//   console.log(
+//     `gs://${bucketName}/${filename} downloaded to ${destFilename}.`
+//   );
+// };
+
 const loadData = () => {
+  console.log("geee ");
+  storageRef.file(fileName).download({
+    public: true,
+    destination: dataFilePath,
+    metadata: {
+      firebaseStorageDownloadTokens: uuidv4(),
+    },
+  });
+
   try {
+    console.log(dataFilePath);
     const data = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
+    console.log(data);
+    // backupData(data);
     return data;
   } catch (e) {
     if (e.code === "ENOENT") {
@@ -55,12 +92,20 @@ const loadData = () => {
 /**
  * Saves the given object into the data file
  */
-const backupData = data => {
+const backupData = (data) => {
   try {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, 0, 2));
   } catch (e) {
     console.error("An error occurred during data backup.", e);
   }
+  // Uploads a local file to the bucket
+  storageRef.upload(dataFilePath, {
+    public: true,
+    destination: `${fileName}`,
+    metadata: {
+      firebaseStorageDownloadTokens: uuidv4(),
+    },
+  });
 };
 
 /**
@@ -88,8 +133,8 @@ const callSlackMethod = async (method, data, options = {}) => {
     url: `https://slack.com/api/${method}`,
     data: data,
     headers: {
-      ...(options.bearer ? { authorization: `Bearer ${options.bearer}` } : {})
-    }
+      ...(options.bearer ? { authorization: `Bearer ${options.bearer}` } : {}),
+    },
   });
 };
 
@@ -99,19 +144,21 @@ const callSlackMethod = async (method, data, options = {}) => {
  * @param {*} arrayToExclude
  */
 const getRandomIn = (arrayToPick, arrayToExclude) => {
-    if (!arrayToPick.length) {
-      return undefined;
-    } else {
-      const chosenValues = _difference(arrayToPick, arrayToExclude);
-      return chosenValues[Math.floor(Math.random() * chosenValues.length)];
-    }
-  };
+  if (!arrayToPick.length) {
+    return undefined;
+  } else {
+    const chosenValues = _difference(arrayToPick, arrayToExclude);
+    return chosenValues[Math.floor(Math.random() * chosenValues.length)];
+  }
+};
 
 /**
  * Returns a random Gif from the configuration file
  */
 const getRandomGif = () => {
-  return config.gifs.length ? config.gifs[Math.floor(Math.random() * config.gifs.length)] : null;
+  return config.gifs.length
+    ? config.gifs[Math.floor(Math.random() * config.gifs.length)]
+    : null;
 };
 
 module.exports = {
@@ -122,5 +169,5 @@ module.exports = {
   sendDelayedResponse,
   getRandomGif,
   getRandomIn,
-  callSlackMethod
+  callSlackMethod,
 };

@@ -2,21 +2,19 @@
   "name": "review-roulette",
   "version": "1.0.0",
   "description": "Randomly selects a reviewer for your MR",
-  "main": "functions/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "build": "netlify-lambda build src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "alex",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "axios": "^0.18.0",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "netlify-lambda": "^1.6.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "firebase-admin": "^10.0.2",
     "lodash": "^4.17.11",
-    "serverless-http": "^2.3.0"
+    "uuid": "^8.3.2"
   }
 }
