@@ -205,7 +205,7 @@ const roulette = {
       `teams[${teamId}].channels[${channelId}].candidates`,
       candidates
     );
-    await backupData(roulette.data);
+    await utils.backupData(roulette.data);
     return candidates;
   },
   /**
@@ -220,7 +220,7 @@ const roulette = {
         `teams[${teamId}].channels[${channelId}].notEligibleUsers`,
         notEligibleUsers
     );
-    await backupData(roulette.data);
+    await utils.backupData(roulette.data);
     return notEligibleUsers;
   },
   /**
@@ -232,7 +232,7 @@ const roulette = {
     const oldData = _get(roulette.data, `teams[${teamId}]`, { channels: {} });
     const updatedData = _merge(oldData, info);
     _set(roulette.data, `teams[${teamId}]`, updatedData);
-    await backupData(roulette.data);
+    await utils.backupData(roulette.data);
     return true;
   },
   /**
@@ -269,7 +269,7 @@ const roulette = {
     }
 
     roulette.data = updatedData;
-    await backupData(roulette.data);
+    await utils.backupData(roulette.data);
     return true;
   },
   /**
