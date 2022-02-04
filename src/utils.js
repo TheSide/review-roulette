@@ -63,7 +63,7 @@ const extractGroup = (str) => {
 
 const loadData = async () => {
   console.log("geee ");
-  storageRef.file(fileName).download({
+  await storageRef.file(fileName).download({
     public: true,
     destination: dataFilePath,
     metadata: {
