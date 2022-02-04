@@ -99,7 +99,7 @@ const backupData = async (data) => {
     console.error("An error occurred during data backup.", e);
   }
   // Uploads a local file to the bucket
-  storageRef.upload(dataFilePath, {
+  await storageRef.upload(dataFilePath, {
     public: true,
     destination: `${fileName}`,
     metadata: {
