@@ -61,7 +61,7 @@ const extractGroup = (str) => {
 //   );
 // };
 
-const loadData = () => {
+const loadData = async () => {
   console.log("geee ");
   storageRef.file(fileName).download({
     public: true,
@@ -92,7 +92,7 @@ const loadData = () => {
 /**
  * Saves the given object into the data file
  */
-const backupData = (data) => {
+const backupData = async (data) => {
   try {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, 0, 2));
   } catch (e) {
