@@ -12,10 +12,9 @@ const roulette = {
   /**
    * Load previously saved data
    */
-  async init() {
-    roulette.data = await utils.loadData();
+  init() {
+    roulette.data = utils.loadData();
 
-    console.log ('ici ' + JSON.stringify(roulette.data));
     //make sure the roulette.data as the latest format
     roulette.updateDataToNewGroupFormat();
   },
@@ -199,13 +198,13 @@ const roulette = {
    * @param {string} channelId
    * @param {array} candidates
    */
-  async setCandidates(teamId, channelId, candidates) {
+  setCandidates(teamId, channelId, candidates) {
     _set(
       roulette.data,
       `teams[${teamId}].channels[${channelId}].candidates`,
       candidates
     );
-    await utils.backupData(roulette.data);
+    utils.backupData(roulette.data);
     return candidates;
   },
   /**
@@ -214,13 +213,13 @@ const roulette = {
    * @param {string} channelId
    * @param {array} notEligibleUsers
    */
-  async setNotEligibleUsers(teamId, channelId, notEligibleUsers) {
+  setNotEligibleUsers(teamId, channelId, notEligibleUsers) {
     _set(
         roulette.data,
         `teams[${teamId}].channels[${channelId}].notEligibleUsers`,
         notEligibleUsers
     );
-    await utils.backupData(roulette.data);
+    utils.backupData(roulette.data);
     return notEligibleUsers;
   },
   /**
@@ -228,17 +227,17 @@ const roulette = {
    * @param {string} teamId
    * @param {object} info
    */
-  async updateTeamData(teamId, info) {
+  updateTeamData(teamId, info) {
     const oldData = _get(roulette.data, `teams[${teamId}]`, { channels: {} });
     const updatedData = _merge(oldData, info);
     _set(roulette.data, `teams[${teamId}]`, updatedData);
-    await utils.backupData(roulette.data);
+    utils.backupData(roulette.data);
     return true;
   },
   /**
    * Update roulette data for the new group format
    */
-  async updateDataToNewGroupFormat() {
+  updateDataToNewGroupFormat() {
     const oldData = roulette.data;
 
     const oldVersion  = _get(oldData, `version`, "0");
@@ -269,7 +268,7 @@ const roulette = {
     }
 
     roulette.data = updatedData;
-    await utils.backupData(roulette.data);
+    utils.backupData(roulette.data);
     return true;
   },
   /**
