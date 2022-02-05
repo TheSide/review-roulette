@@ -40,6 +40,6 @@ server.post(`${config.baseUrl}/command`, app.processCommand);
  */
 server.post(`${config.baseUrl}/action`, app.processAction);
 
-server.listen(config.port, () =>
-  console.log(`Review Roulette server is listening on port ${config.port}!`)
+server.listen(process.env.PORT, () =>
+  console.log(`Review Roulette server is listening on port ${process.env.PORT}!`)
 );
